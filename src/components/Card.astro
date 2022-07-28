@@ -7,8 +7,8 @@ export interface Props {
 const { title, rate } = Astro.props as Props;
 ---
 
-<div class="w-96 mx-auto mt-10">
-  <h3>{title}</h3>
+<div class="w-96 mx-auto mt-10 px-4">
+  <h3 class="capitalize">{title}</h3>
   <div
     class="border border-gray-100 rounded-md bg-white  px-8 py-4 shadow-sm mt-1">
     <slot />

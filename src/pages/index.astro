@@ -1,6 +1,7 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import Card from "../components/Card.astro";
+import { getAllRates } from "../services/rates";
 
 const testProp = {
   title: 'Send',
@@ -10,12 +11,14 @@ const testProp = {
     'usd': 60
   }
 };
+
+const result = await getAllRates();
 ---
 
 <PageLayout>
   <div class="py-12 max-w-7xl mx-auto">
     <div class="px-4 sm:px-6 lg:px-8">
-      <div class="lg:text-center">
+      <div class="sm:text-center">
         <h2
           class="text-base text-green-600 font-semibold tracking-wide uppercase">
           FX rates
@@ -32,7 +35,10 @@ const testProp = {
       </div>
     </div>
 
-    <Card rate={testProp.rate} title={testProp.title} />
-    <Card rate={testProp.rate} title={testProp.title} />
+    {
+    result.map(item => (
+    <Card rate={item.rate} title={item.title} />
+    ))
+    }
   </div>
 </PageLayout>

@@ -1,22 +1,38 @@
 ---
-// Component Imports
-import Button from "../components/Button.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import Card from "../components/Card.astro";
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
+const testProp = {
+  title: 'Send',
+  rate: {
+    'eur': 60,
+    'gbp': 80,
+    'usd': 60
+  }
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<title>Astro + TailwindCSS</title>
-	</head>
+<PageLayout>
+  <div class="py-12 max-w-7xl mx-auto">
+    <div class="px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <h2
+          class="text-base text-green-600 font-semibold tracking-wide uppercase">
+          FX rates
+        </h2>
+        <p
+          class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          A better way to see exchange rates
+        </p>
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          Exchange rates presentations don't have to be boring and annoying like
+          the Naira value 😞. This is a mission to give it a face lift with
+          delightful UI and experience 🥳.
+        </p>
+      </div>
+    </div>
 
-	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Tailwind Button in Astro!</Button>
-			<a href="/markdown-page" class="p-4 underline">Markdown is also supported...</a>
-		</div>
-	</body>
-</html>
+    <Card rate={testProp.rate} title={testProp.title} />
+    <Card rate={testProp.rate} title={testProp.title} />
+  </div>
+</PageLayout>

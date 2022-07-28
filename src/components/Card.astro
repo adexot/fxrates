@@ -1,0 +1,33 @@
+---
+export interface Props {
+  title: string;
+  rate: Record<string, number>;
+}
+
+const { title, rate } = Astro.props as Props;
+---
+
+<div class="w-96 mx-auto mt-10">
+  <h3>{title}</h3>
+  <div
+    class="border border-gray-100 rounded-md bg-white  px-8 py-4 shadow-sm mt-1">
+    <slot />
+    <ul>
+      <li class="flex justify-between">
+        <span>1 EUR</span>
+        <span>&rlhar;</span>
+        <span>&#8358; {rate?.eur}</span>
+      </li>
+      <li class="flex justify-between mt-5">
+        <span>1 GBP</span>
+        <span>&rlhar;</span>
+        <span>&#8358; {rate?.gbp}</span>
+      </li>
+      <li class="flex justify-between mt-5">
+        <span>1 USD</span>
+        <span>&rlhar;</span>
+        <span>&#8358; {rate?.usd}</span>
+      </li>
+    </ul>
+  </div>
+</div>

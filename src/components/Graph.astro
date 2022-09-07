@@ -1,0 +1,40 @@
+<details class:list={["max-w-md", "mx-auto", "mt-2"]} open={true}>
+  <summary class="border-2 rounded-md p-2"
+    >See Graphical illustration of the changes overtime!
+  </summary>
+
+  <div id="chart" class="p-4"></div>
+</details>
+
+<script
+  is:inline
+  src="https://unpkg.com/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js"
+></script>
+<script>
+  import { getKVRates, generateChartData } from "../services/kv";
+
+  const { labels, send, grey } = generateChartData(getKVRates());
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        name: "Send",
+        values: send,
+      },
+      {
+        name: "Grey",
+        values: grey,
+      },
+    ],
+  };
+
+  // https://github.com/frappe/charts#usage
+  new frappe.Chart("#chart", {
+    title: "Rate changes overtime",
+    data,
+    type: "line",
+    height: 250,
+    colors: ["#7cd6fd", "#743ee2"],
+  });
+</script>

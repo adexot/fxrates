@@ -2,15 +2,7 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Card from "../components/Card.astro";
 import { getAllRates } from "../services/rates";
-
-const testProp = {
-  title: 'Send',
-  rate: {
-    'eur': 60,
-    'gbp': 80,
-    'usd': 60
-  }
-};
+import Graph from "../components/Graph.astro";
 
 const result = await getAllRates();
 ---
@@ -20,11 +12,13 @@ const result = await getAllRates();
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:text-center">
         <h2
-          class="text-base text-green-600 font-semibold tracking-wide uppercase">
+          class="text-base text-green-600 font-semibold tracking-wide uppercase"
+        >
           FX rates
         </h2>
         <p
-          class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+        >
           A better way to see exchange rates
         </p>
         <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
@@ -35,10 +29,8 @@ const result = await getAllRates();
       </div>
     </div>
 
-    {
-    result.map(item => (
-    <Card rate={item.rate} title={item.title} />
-    ))
-    }
+    <Graph client:visible />
+
+    {result.map((item) => <Card rate={item.rate} title={item.title} />)}
   </div>
 </PageLayout>

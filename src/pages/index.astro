@@ -34,6 +34,10 @@ const showGraph = withValue?.includes("graph");
 
     {showGraph && <Graph client:visible />}
 
-    {result.map((item) => <Card rate={item.rate} title={item.title} />)}
+    {
+      Object.keys(result).map((provider) => (
+        <Card rate={result[provider]} title={provider} />
+      ))
+    }
   </div>
 </PageLayout>

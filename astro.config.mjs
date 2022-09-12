@@ -7,5 +7,5 @@ export default defineConfig({
 	integrations: [tailwind()],
 	// support ssr with cloudflare wrangler 
 	output: 'server',
-	adapter: cloudflare()
+	adapter: cloudflare(),
 });

@@ -1,3 +1,5 @@
+import { fetchUtil } from "../utils/helpers";
+
 const generateSendUrl = path => `https://sendgateway.myflutterwave.com/api/v1/config/countrypairs/${path}`;
 
 export async function getAllRates(): Promise<any> {
@@ -12,18 +14,18 @@ export async function getAllRates(): Promise<any> {
     sendGBPRate,
     sendUSDRate] = await Promise.all([getGreyRates, getSendEURRate, getSendGBPRate, getSendUSDRate]);
 
-  const batchResponse = [
-    { title: 'grey', rate: {} },
-    { title: 'send', rate: {} }
-  ];
+  const batchResponse = {
+    grey: {},
+    send: {}
+  }
 
   greyRates.forEach(element => {
-    batchResponse[0].rate[element.currency.toLowerCase()] = element.buy_rate
+    batchResponse.grey[element.currency.toLowerCase()] = element.buy_rate
   });
 
-  batchResponse[1].rate['eur'] = getNGNValueFromSend(sendEURRate['data']);
-  batchResponse[1].rate['gbp'] = getNGNValueFromSend(sendGBPRate['data']);
-  batchResponse[1].rate['usd'] = getNGNValueFromSend(sendUSDRate['data']);
+  batchResponse.send['eur'] = getNGNValueFromSend(sendEURRate['data']);
+  batchResponse.send['gbp'] = getNGNValueFromSend(sendGBPRate['data']);
+  batchResponse.send['usd'] = getNGNValueFromSend(sendUSDRate['data']);
 
   return batchResponse;
 }
@@ -33,19 +35,3 @@ function getNGNValueFromSend(res) {
 
   return ngValue[0].exchangeRate;
 }
-
-function fetchUtil(url, options = {},) {
-  return fetch(url, options,).then((res) => {
-    if (!res.ok) {
-      return res.json().then((json,) => {
-        if (res.status.toString() === '401') {
-          // TODO: handle the unauthorized case of the backend
-          // 401: Auth Token expired. Please login again
-          // 422:
-        }
-        return Promise.reject(json);
-      });
-    }
-    return res.json();
-  });
-};

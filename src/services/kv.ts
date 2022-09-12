@@ -1,13 +1,13 @@
-import { isDev, KV_RATES } from "../utils/constants";
+import { isDev } from "../utils/constants";
 import { fetchUtil, getRandomArbitrary } from "../utils/helpers";
 
-type ValueMap = Record<number, Record<string, any>>;
+type ValueMap = Partial<[number, Record<string, any>]>;
 function generateDevRateValues(length: number): ValueMap {
   const time = Array.from({ length }, (_) => getRandomArbitrary(1662504016195, 1662704016195)).sort();
-  const valueMap: ValueMap = {};
+  const valueMap: ValueMap = [];
 
   time.forEach(val => {
-    valueMap[val] = {
+    valueMap.push([val, {
       send: {
         "eur": getRandomArbitrary(650, 700),
         "usd": getRandomArbitrary(650, 700),
@@ -18,7 +18,7 @@ function generateDevRateValues(length: number): ValueMap {
         "usd": getRandomArbitrary(650, 690),
         "gbp": getRandomArbitrary(750, 850)
       },
-    }
+    }])
   })
 
   return valueMap;
@@ -31,13 +31,12 @@ function generateLabel(timestamp: number): string {
 
 export async function getKVRates(): Promise<ValueMap> {
   if (isDev) {
-    console.log({ data: generateDevRateValues(10) })
     return generateDevRateValues(10);
   }
 
   // make call to worker to get the values
   const kvRates = await fetchUtil('https://fxrates-worker.adexot.workers.dev');
-  return kvRates;
+  return kvRates.data;
 }
 
 
@@ -57,10 +56,9 @@ export function generateChartData(data: ValueMap, currency: string = 'eur'): Cha
   const send = [];
   const grey = [];
 
-  Object.keys(data).slice(-7).forEach(key => {
-    const intKey = parseInt(key);
-    labels.push(generateLabel(intKey));
-    const obj = data[key];
+  data.slice(-7).forEach(entry => {
+    labels.push(generateLabel(entry[0]));
+    const obj = entry[1];
     send.push(obj.send[currency]);
     grey.push(obj.grey[currency]);
   });

@@ -3,7 +3,16 @@
     >See Graphical illustration of the changes overtime!
   </summary>
 
-  <div id="chart" class="p-4"></div>
+  <div class="p-2">
+    <small
+      >Currency: <select class="border" id="currency_option">
+        <option value="eur">Eur</option>
+        <option value="usd">USD</option>
+        <option value="gbp">GBP</option>
+      </select>
+    </small>
+  </div>
+  <div id="chart" class="pl-4"></div>
 </details>
 
 <script
@@ -12,29 +21,42 @@
 ></script>
 <script>
   import { getKVRates, generateChartData } from "../services/kv";
+  (async () => {
+    const rates = await getKVRates();
+    const currencyRef = document.getElementById(
+      "currency_option"
+    ) as HTMLSelectElement;
+    renderChart(rates, currencyRef.value);
 
-  const { labels, send, grey } = generateChartData(await getKVRates());
+    currencyRef.addEventListener("change", (e) => {
+      renderChart(rates, e.target["value"]);
+    });
+  })();
 
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        name: "Send",
-        values: send,
-      },
-      {
-        name: "Grey",
-        values: grey,
-      },
-    ],
-  };
+  function renderChart(rates, currency) {
+    const { labels, send, grey } = generateChartData(rates, currency);
 
-  // https://github.com/frappe/charts#usage
-  new frappe.Chart("#chart", {
-    title: "Rate changes overtime",
-    data,
-    type: "line",
-    height: 250,
-    colors: ["#7cd6fd", "#743ee2"],
-  });
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          name: "Send",
+          values: send,
+        },
+        {
+          name: "Grey",
+          values: grey,
+        },
+      ],
+    };
+
+    // https://github.com/frappe/charts#usage
+    new frappe.Chart("#chart", {
+      title: "Rate changes overtime",
+      data,
+      type: "line",
+      height: 250,
+      colors: ["#7cd6fd", "#743ee2"],
+    });
+  }
 </script>

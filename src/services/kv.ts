@@ -68,7 +68,7 @@ export function generateChartData(data: ValueMap, currency: string = 'eur'): Cha
     const obj = entry[1];
     send.push(obj.send[currency]);
     grey.push(obj.grey[currency]);
-    transferGo.push(obj.transferGo[currency])
+    transferGo.push(obj.transferGo[currency] || 0)
   });
 
   return {

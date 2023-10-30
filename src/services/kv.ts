@@ -18,6 +18,11 @@ function generateDevRateValues(length: number): ValueMap {
         "usd": getRandomArbitrary(650, 690),
         "gbp": getRandomArbitrary(750, 850)
       },
+      transferGo: {
+        "eur": getRandomArbitrary(650, 700),
+        // "usd": getRandomArbitrary(650, 690),
+        "gbp": getRandomArbitrary(750, 850)
+      },
     }])
   })
 
@@ -44,6 +49,7 @@ interface ChartData {
   labels: string[];
   grey: number[];
   send: number[];
+  transferGo: number[];
 }
 /**
  * Idea:
@@ -55,17 +61,20 @@ export function generateChartData(data: ValueMap, currency: string = 'eur'): Cha
   const labels = [];
   const send = [];
   const grey = [];
+  const transferGo = [];
 
   data.slice(-7).forEach(entry => {
     labels.push(generateLabel(entry[0]));
     const obj = entry[1];
     send.push(obj.send[currency]);
     grey.push(obj.grey[currency]);
+    transferGo.push(obj.transferGo[currency])
   });
 
   return {
     labels,
     send,
-    grey
+    grey, 
+    transferGo,
   }
 }

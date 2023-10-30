@@ -10,7 +10,7 @@
         <option value="usd">USD</option>
         <option value="gbp">GBP</option>
       </select>
-    </small>
+    </small>                                                  
   </div>
   <div id="chart" class="pl-4"></div>
 </details>
@@ -34,7 +34,7 @@
   })();
 
   function renderChart(rates, currency) {
-    const { labels, send, grey } = generateChartData(rates, currency);
+    const { labels, send, grey, transferGo } = generateChartData(rates, currency);
 
     const data = {
       labels: labels,
@@ -47,6 +47,10 @@
           name: "Grey",
           values: grey,
         },
+        {
+          name: "TransferGo",
+          values: transferGo,
+        },
       ],
     };
 
@@ -56,7 +60,7 @@
       data,
       type: "line",
       height: 250,
-      colors: ["#7cd6fd", "#743ee2"],
+      colors: ["#7cd6fd", "#743ee2", "#C38D94"],
     });
   }
 </script>

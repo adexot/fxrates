@@ -88,7 +88,7 @@ export async function getAllRates() {
 }
 
 function getNGNValueFromSend(res) {
-	return res.filter(el => el.toCurrencyCode.toLowerCase() === 'ngn')[0].exchangeRate;
+	return res.filter(el => el.toCurrencyCode.toLowerCase() === 'ngn')[0]?.exchangeRate;
 }
 
 function getNGNValueFromTG(res) {

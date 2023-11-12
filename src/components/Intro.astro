@@ -1,0 +1,20 @@
+---
+const date = new Date().toUTCString();
+---
+<section class="mx-auto max-w-3xl px-2 mt-16">
+    <h1 class="text-3xl font-medium text-gray-800 max-w-2xl">
+        Get daily access to Naira Exchange Rates at current selling price
+    </h1>
+    <p class="text-lg mx-auto mt-4">
+        These are real time exchange rate from the top-level financial data providers and various commercial sources  & banks, that’s why the rate changes all the time. The exchange rate is the rate you find on Grey finance, Sendapp and Transfer Go. The live  Nigerian Naira exchange rate (NGN) as of <span class="text-amber-500">{date}</span>.  Rates refresh in <span class="timer text-amber-500"></span>
+    </p>
+</section>
+
+<script type="module">
+let seconds = 59;
+setInterval(() => {
+    document.querySelector('.timer').innerHTML = `${seconds}s`;
+    if (seconds === 0) { seconds = 59} 
+    else { --seconds }
+}, 1000);
+</script>

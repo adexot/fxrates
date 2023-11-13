@@ -1,5 +1,5 @@
 ---
-import Converter from "components/Converter.astro";
+import Converter from "components/Calc.jsx";
 import Footer from "components/Footer.astro";
 import Intro from "components/Intro.astro";
 import Nav from "components/Nav.astro";
@@ -7,6 +7,9 @@ import Rates from "components/Rates.astro";
 import Subscription from "components/Subscription.astro";
 import Viewed from "components/Viewed.astro";
 import PageLayout from "layouts/PageLayout.astro";
+
+import { getAllRates } from "../services/rates";
+const result = await getAllRates();
 ---
 
 <PageLayout>
@@ -14,7 +17,7 @@ import PageLayout from "layouts/PageLayout.astro";
   <Intro />
   <Rates />
   <Viewed />
-  <Converter />
+  <Converter rates={result} client:only="react" />
   <Subscription />
   <Footer />
 </PageLayout>

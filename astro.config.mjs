@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,8 +10,8 @@ export default defineConfig({
 	output: 'server',
 	adapter: cloudflare(),
 	vite: {
-		ssr: {
-			external: ['svgo']
-		}
+		plugins: [
+			nodePolyfills()
+		]
 	},
 });

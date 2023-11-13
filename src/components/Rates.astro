@@ -1,0 +1,66 @@
+---
+const charts = [
+    {
+        title: "Grey",
+        eur: "₦ 1,125.39",
+        usd: "₦ 1,125.39",
+        gbp: "₦ 1,125.39",
+        charts: null,
+    },
+    {
+        title: "TransferGo",
+        eur: "₦ 1,125.39",
+        usd: "₦ 1,125.39",
+        gbp: "₦ 1,125.39",
+        charts: null,
+    },
+    {
+        title: "Send App",
+        eur: "₦ 1,125.39",
+        usd: "₦ 1,125.39",
+        gbp: "₦ 1,125.39",
+        charts: null,
+    },
+];
+---
+
+<div
+    class="mx-auto max-w-3xl my-16 shadow-sm relative rounded-xl overflow-auto border-2 border-slate-100"
+>
+    <table class="table-auto border-collapse w-full text-sm">
+        <thead>
+            <tr>
+                <th class="font-light p-6 text-left border-b border-slate-100">
+                    Platforms
+                </th>
+                <th class="font-light p-6 text-left border-b border-slate-100">
+                    1 EUR (€)
+                </th>
+                <th class="font-light p-6 text-left border-b border-slate-100">
+                    1 GBP(£)
+                </th>
+                <th class="font-light p-6 text-left border-b border-slate-100">
+                    1 USD($)
+                </th>
+                <th class="font-light p-6 text-left border-b border-slate-100">
+                    Charts
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white font-normal">
+            {
+                charts.map((chart) => {
+                    return (
+                        <tr class="border-b border-slate-100">
+                            <td class="p-6">{chart.title}</td>
+                            <td class="p-6">{chart.eur}</td>
+                            <td class="p-6">{chart.gbp}</td>
+                            <td class="p-6">{chart.usd}</td>
+                            <td class="p-6">{chart.charts}</td>
+                        </tr>
+                    );
+                })
+            }
+        </tbody>
+    </table>
+</div>

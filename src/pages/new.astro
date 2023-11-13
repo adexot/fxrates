@@ -1,15 +1,20 @@
 ---
+import Converter from "components/Converter.astro";
 import Footer from "components/Footer.astro";
 import Intro from "components/Intro.astro";
 import Nav from "components/Nav.astro";
+import Rates from "components/Rates.astro";
 import Subscription from "components/Subscription.astro";
 import Viewed from "components/Viewed.astro";
 import PageLayout from "layouts/PageLayout.astro";
 ---
+
 <PageLayout>
   <Nav />
   <Intro />
+  <Rates />
   <Viewed />
+  <Converter />
   <Subscription />
   <Footer />
 </PageLayout>

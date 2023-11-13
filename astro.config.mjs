@@ -8,4 +8,9 @@ export default defineConfig({
 	// support ssr with cloudflare wrangler 
 	output: 'server',
 	adapter: cloudflare(),
+	vite: {
+		ssr: {
+			external: ['svgo']
+		}
+	},
 });

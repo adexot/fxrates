@@ -20,6 +20,7 @@
     "wrangler": "^2.0.25"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
     "astro-icon": "^0.8.1"
   }
 }

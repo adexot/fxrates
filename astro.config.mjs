@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import react from "@astrojs/react";
 
 // https://astro.build/config
@@ -11,6 +10,10 @@ export default defineConfig({
   output: 'server',
   adapter: cloudflare(),
   vite: {
-    plugins: [nodePolyfills()]
-  }
+    resolve: {
+      alias: {
+        "svgo": import.meta.env.PROD ? "svgo/dist/svgo.browser.js" : "svgo"
+      }
+    }
+  },
 });

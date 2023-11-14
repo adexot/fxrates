@@ -28,5 +28,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "use-debounce": "^10.0.0"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

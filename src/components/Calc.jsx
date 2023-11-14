@@ -153,8 +153,12 @@ export default function Converter({ rates = defaultRates }) {
     const conversionRate = rates[platform.id][currency.id] ?? 0;
     const amount = debouncedValue * conversionRate;
 
-    const handleInputChange = (event) => {
-        const value = event.target.value;
+    const handleInputChange = (e) => {
+        let { value, maxLength } = e.target;
+        console.log({ value, maxLength })
+        if (String(value).length >= maxLength) {
+            value = Number(value.slice(0, maxLength));
+        }
         setInputValue(value);
     };
 
@@ -191,6 +195,8 @@ export default function Converter({ rates = defaultRates }) {
                             type="number"
                             name="amount"
                             id="amount"
+                            min={0}
+                            maxLength={8}
                             autoComplete="famount"
                             className="block w-full rounded-sm border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="Enter an amount e.g $3,423.12"
@@ -214,7 +220,7 @@ export default function Converter({ rates = defaultRates }) {
                 <p className="text-sm text-gray-500">Currency Converter Result</p>
                 <div className="my-16">
                     <span className="text-5xl font-semibold block mb-2">₦ {currencyFormat(amount)}</span>
-                    <span className="block text-md">NGN(₦) - Nigerian Nairas</span>
+                    <span className="block text-md">NGN(₦) - Nigerian Naira</span>
                 </div>
                 <p className="text-sm text-gray-700">
                     1.00 {currency.name} = {rates[platform.id][currency.id]} NGN (₦) - Nigerian Naira

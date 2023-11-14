@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [react(), tailwind()],
   // support ssr with cloudflare wrangler 
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({ mode: "directory" }),
   vite: {
     resolve: {
       alias: {

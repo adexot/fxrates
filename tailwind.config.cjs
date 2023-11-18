@@ -5,6 +5,7 @@ module.exports = {
 			colors: {
 				"fx-blue-dark": "#213B54",
 				"fx-blue-light": "#12B5EA",
+				"fx-blue-fade": "#BBF3FD",
 				"fx-orange": "#EC7104",
 				"fx-gray-light": "#F7FAFE",
 			},

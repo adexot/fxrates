@@ -33,23 +33,61 @@ import { Icon } from 'astro-icon'
     
 	
 
-    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+    <form id="subscribe" class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div class="sm:col-span-2">
               <label for="first-name" class="block text-sm font-medium leading-6 text-fx-blue-dark">Name (optional)</label>
               <div class="mt-2">
-                <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-sm border-0 p-2 text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-fx-blue-dark focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your name">
+                <input type="text" name="name" id="name" autocomplete="name" class="block w-full rounded-sm border-0 p-2 text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-fx-blue-dark focus:ring-2 focus:ring-inset focus:ring-fx-blue-light sm:text-sm sm:leading-6" placeholder="Enter your name">
               </div>
             </div>
     
             <div class="sm:col-span-3">
               <label for="last-name" class="block text-sm font-medium leading-6 text-fx-blue-dark">Email addresss (required)</label>
               <div class="mt-2">
-                <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full rounded-sm border-0 p-2 text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-fx-blue-dark focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your email address">
+                <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-sm border-0 p-2 text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-fx-blue-dark focus:ring-2 focus:ring-inset focus:ring-fx-blue-light sm:text-sm sm:leading-6" placeholder="Enter your email address" required>
               </div>
             </div>
 
             <div class="sm:col-span-1 self-end">
                 <button type="submit" class="bg-slate-900 p-2.5 text-sm text-white w-full">Subscribe</button>
             </div>
+    </form>
+
+    <div class="p-4 bg-fx-blue-fade rounded-2xl max-w-3xl mx-auto relative top-6 hidden" id="notif-box">
+      <!-- <Icon name="close" size="16" class="absolute top-4 right-4"/> -->
+      <h4 class="text-md font-medium">Congratulation, you have joined the fxrates newsletter</h4>
+      <p class="mt-1 max-w-3xl">
+        You will be getting the current selling price of  EUR (€), GBP(£) and USD($) from Grey Finance, SendApp and Transfer Go. This will be sent periodically, and you can always unsubscribe at anytime.
+      </p>
     </div>
 </section>
+
+<script type="module">
+const form  = document.getElementById('subscribe');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = form.elements['name'];
+  const email = form.elements['email'];
+  const date = new Date();
+  console.log({name: name.value, email: email.value})
+
+  Engage.identify({
+    id: date.getTime(), 
+    name: name.value || 'user',
+    email: email.value,
+    created_at: date.toISOString(),
+  })
+  .then(() => {
+    name.value = '';
+    email.value = ''
+
+    const notifBox = document.querySelector('#notif-box');
+    notifBox.classList.remove('hidden')
+    notifBox.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+  })
+  .catch(console.error)
+  
+});
+
+</script>

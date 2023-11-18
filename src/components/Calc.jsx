@@ -68,11 +68,11 @@ export function ListBoxComponent({ items, label, selected, setSelected }) {
         <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
                 <>
-                    <Listbox.Label className="block text-sm font-normal leading-6 text-gray-900">
+                    <Listbox.Label className="block text-sm font-normal leading-6'text-fx-blue-dark">
                         {label}
                     </Listbox.Label>
                     <div className="relative mt-2">
-                        <Listbox.Button className="relative w-full cursor-default rounded-sm bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                        <Listbox.Button className="relative w-full cursor-default rounded-sm bg-white py-2 pl-3 pr-10 text-left'text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                             <span className="flex items-center">
                                 {selected.avatar && (
                                     <img src={selected.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
@@ -97,7 +97,7 @@ export function ListBoxComponent({ items, label, selected, setSelected }) {
                                         key={item.id}
                                         className={({ active }) =>
                                             classNames(
-                                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                                active ? 'bg-indigo-600 text-white' : 'text-fx-blue-dark',
                                                 'relative cursor-default select-none py-2 pl-3 pr-9'
                                             )
                                         }
@@ -176,7 +176,7 @@ export default function Converter({ rates = defaultRates }) {
                 <div className="sm:col-span-4">
                     <label
                         htmlFor="last-name"
-                        className="block text-sm font-normal leading-6 text-gray-900"
+                        className="block text-sm font-normal leading-6'text-fx-blue-dark"
                     >Your preferred amount</label
                     >
                     <div className="mt-2">
@@ -187,7 +187,7 @@ export default function Converter({ rates = defaultRates }) {
                             min={0}
                             maxLength={7}
                             autoComplete="famount"
-                            className="block w-full rounded-sm border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full rounded-sm border-0 p-2'text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="Enter an amount e.g $3,423.12"
                             onChange={handleInputChange}
                             value={debouncedValue}

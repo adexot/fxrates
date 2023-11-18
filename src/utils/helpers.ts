@@ -17,3 +17,16 @@ export function fetchUtil(url, options = {},) {
     return res.json();
   });
 };
+
+export function currencyFormat(amount, fallbackValue='') {
+  if(!amount) return fallbackValue;
+
+  const options = {
+      maximumFractionDigits: 2,
+      currency: 'NGN',
+      style: 'currency',
+  };
+  const currencyValue = amount.toLocaleString('en-NG', options)
+  // format the currency to have a space between symbol and value
+  return currencyValue.replace(/(\D)(\d)/, '$1 $2'); // $1 is the matched character, $2 is the captured group
+}

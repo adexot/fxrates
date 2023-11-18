@@ -1,67 +1,20 @@
-<section class="mx-auto max-w-3xl px-2 mt-16 text-center">
-    <h3 class="text-xl font-medium text-gray-800 max-w-2xl">
+---
+import Calc from "components/Calc.jsx";
+import CurrentDate from "./CurrentDate.astro";
+import Refresh from "./Refresh.astro";
+
+const {rates } = Astro.props;
+---
+
+<section class="mx-auto max-w-4xl px-2 mt-16 text-center">
+    <h3 class="text-xl font-medium text-gray-800">
         Currency Converter for USD, GBP & EUR
     </h3>
     <p class="text-lg mx-auto mt-4">
         We use the mid-market rate for our Converter. This is for informational
         purposes only. You won’t receive this rate when sending /receive money.
-        The live Nigerian Naira exchange rate (NGN) as of 4 Nov 2023 at 7:59 AM.
-        Rates refresh in 59s
+        The live Nigerian Naira exchange rate (NGN) as of <CurrentDate />. <Refresh />
     </p>
 
-    <!-- form -->
-    <div class="mt-10 grid grid-cols-1 gap-x-6 sm:grid-cols-10 text-left">
-        <div class="sm:col-span-3">
-            <label
-                for="first-name"
-                class="block text-sm font-medium leading-6 text-gray-900"
-                >Currency</label
-            >
-            <div class="mt-2">
-                <input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    autocomplete="given-name"
-                    class="block w-full rounded-sm border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="Enter your name"
-                />
-            </div>
-        </div>
-
-        <div class="sm:col-span-4">
-            <label
-                for="last-name"
-                class="block text-sm font-medium leading-6 text-gray-900"
-                >Your preferred amount</label
-            >
-            <div class="mt-2">
-                <input
-                    type="number"
-                    name="amount"
-                    id="amount"
-                    autocomplete="famount"
-                    class="block w-full rounded-sm border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="Enter an amount e.g $3,423.12 or $842.57"
-                />
-            </div>
-        </div>
-
-        <div class="sm:col-span-3"></div>
-    </div>
-
-    <!-- result -->
-    <div class="bg-green-50 mt-16 p-8 rounded-md">
-        <p class="text-sm text-gray-500">Currency Converter Result</p>
-        <div class="my-16">
-            <span class="text-5xl font-semibold block mb-2">₦ 0.00</span>
-            <span class="block text-md">NGN(₦) - Nigerian Nairas</span>
-        </div>
-        <p class="text-sm text-gray-700">
-            1.00 USD($) - US Dollar = ₦ 1,058.68 NGN (₦) - Nigerian Naira
-        </p>
-        <p class="text-sm text-gray-700">
-            1.00 NGN(₦) - Nigerian Naira = 0.00126796 USD ($) - US Dollar
-        </p>
-    </div>
+    <Calc rates={rates} client:only="react" />
 </section>

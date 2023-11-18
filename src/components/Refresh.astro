@@ -1,0 +1,14 @@
+Rates refresh in 
+<span class="timer text-amber-500"></span>
+
+<script type="module">
+    let seconds = 59;
+    setInterval(() => {
+        document.querySelector(".timer").innerHTML = `${seconds}s`;
+        if (seconds === 0) {
+            seconds = 59;
+        } else {
+            --seconds;
+        }
+    }, 1000);
+</script>

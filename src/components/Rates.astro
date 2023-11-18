@@ -1,66 +1,69 @@
 ---
-const charts = [
-    {
-        title: "Grey",
-        eur: "₦ 1,125.39",
-        usd: "₦ 1,125.39",
-        gbp: "₦ 1,125.39",
-        charts: null,
-    },
-    {
-        title: "TransferGo",
-        eur: "₦ 1,125.39",
-        usd: "₦ 1,125.39",
-        gbp: "₦ 1,125.39",
-        charts: null,
-    },
-    {
-        title: "Send App",
-        eur: "₦ 1,125.39",
-        usd: "₦ 1,125.39",
-        gbp: "₦ 1,125.39",
-        charts: null,
-    },
-];
----
+import { currencyFormat } from 'utils/helpers';
+type Currencies = 'eur' | 'usd' | 'gbp';
+interface Props {
+  rates: Record<string, Record<Currencies, number>>
+}
 
-<div
-    class="mx-auto max-w-3xl my-16 shadow-sm relative rounded-xl overflow-auto border-2 border-slate-100"
->
-    <table class="table-auto border-collapse w-full text-sm">
-        <thead>
-            <tr>
-                <th class="font-light p-6 text-left border-b border-slate-100">
-                    Platforms
-                </th>
-                <th class="font-light p-6 text-left border-b border-slate-100">
-                    1 EUR (€)
-                </th>
-                <th class="font-light p-6 text-left border-b border-slate-100">
-                    1 GBP(£)
-                </th>
-                <th class="font-light p-6 text-left border-b border-slate-100">
-                    1 USD($)
-                </th>
-                <th class="font-light p-6 text-left border-b border-slate-100">
-                    Charts
-                </th>
-            </tr>
-        </thead>
-        <tbody class="bg-white font-normal">
-            {
-                charts.map((chart) => {
-                    return (
-                        <tr class="border-b border-slate-100">
-                            <td class="p-6">{chart.title}</td>
-                            <td class="p-6">{chart.eur}</td>
-                            <td class="p-6">{chart.gbp}</td>
-                            <td class="p-6">{chart.usd}</td>
-                            <td class="p-6">{chart.charts}</td>
-                        </tr>
-                    );
-                })
-            }
-        </tbody>
-    </table>
-</div>
+const {rates} = Astro.props as Props;
+
+const platforms ={
+    grey: 'Grey Finance',
+    send: 'Send App',
+    transferGo: 'TransferGo',
+}
+
+const charts = Object.entries(rates).map(([key, value]) => ({
+    title: platforms[key],
+    ...value,
+    charts: null,
+    image: `images/${key.toLowerCase()}.png`,
+}))
+---
+<section class="px-2">
+    <div
+        class="mx-auto max-w-4xl my-16 shadow-sm relative rounded-xl overflow-auto border-2 border-slate-100"
+    >
+        <table class="table-auto border-collapse w-full text-sm">
+            <thead>
+                <tr>
+                    <th class="font-normal p-6 text-left border-b border-slate-100">
+                        Platforms
+                    </th>
+                    <th class="font-normal p-6 text-left border-b border-slate-100">
+                        1 EUR (€)
+                    </th>
+                    <th class="font-normal p-6 text-left border-b border-slate-100">
+                        1 GBP(£)
+                    </th>
+                    <th class="font-normal p-6 text-left border-b border-slate-100">
+                        1 USD($)
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white font-medium">
+                {
+                    charts.map((chart) => {
+                        return (
+                            <tr class="border-b border-slate-100">
+                                <td class="p-6 inline-flex text-base capitalize">
+                                    <img src={chart.image} alt="" class="h-8 w-8 flex-shrink-0 rounded-full mr-1" />
+                                    <span>{chart.title}</span>
+                                </td>
+                                <td class="p-6 text-base">
+                                    {currencyFormat(chart.eur)}
+                                </td>
+                                <td class="p-6 text-base">
+                                    {currencyFormat(chart.gbp)}
+                                </td>
+                                <td class="p-6 text-base">
+                                    {currencyFormat(chart.usd, '-')}
+                                </td>
+                            </tr>
+                        );
+                    })
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

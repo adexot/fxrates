@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { useDebounce } from "use-debounce";
+import { currencyFormat } from '../utils/helpers'
 
 const platforms = [
     {
@@ -137,14 +138,6 @@ export function ListBoxComponent({ items, label, selected, setSelected }) {
     )
 }
 
-function currencyFormat(amount) {
-    const options = {
-        maximumFractionDigits: 2,
-    };
-    const currencyValue = new Intl.NumberFormat('en-US', options).format(amount);
-    return currencyValue;
-}
-
 export default function Converter({ rates = defaultRates }) {
     const [platform, setPlatform] = useState(platforms[0])
     const [currency, setCurrency] = useState(currencies[0])
@@ -155,25 +148,21 @@ export default function Converter({ rates = defaultRates }) {
 
     const handleInputChange = (e) => {
         let { value, maxLength } = e.target;
-        console.log({ value, maxLength })
+
+        // remove leading zero
+        if (value[0] === '0') {
+            value = value.slice(1);
+        }
+        // make sure the input adheres to the maxLength
         if (String(value).length >= maxLength) {
             value = Number(value.slice(0, maxLength));
         }
+
         setInputValue(value);
     };
 
     return (
-        <section className="mx-auto max-w-3xl px-2 mt-16 text-center">
-            <h3 className="text-xl font-medium text-gray-800 max-w-2xl">
-                Currency Converter for USD, GBP & EUR
-            </h3>
-            <p className="text-lg mx-auto mt-4">
-                We use the mid-market rate for our Converter. This is for informational
-                purposes only. You won’t receive this rate when sending /receive money.
-                The live Nigerian Naira exchange rate (NGN) as of 4 Nov 2023 at 7:59 AM.
-                Rates refresh in 59s
-            </p>
-
+        <section className="mx-auto max-w-4xl px-2 mt-16 text-center">
             <div className="mt-10 grid grid-cols-1 gap-x-6 sm:grid-cols-10 text-left">
                 <div className="sm:col-span-3">
                     <ListBoxComponent
@@ -219,8 +208,12 @@ export default function Converter({ rates = defaultRates }) {
             <div className="bg-green-50 mt-16 p-8 rounded-lg">
                 <p className="text-sm text-gray-500">Currency Converter Result</p>
                 <div className="my-16">
-                    <span className="text-5xl font-semibold block mb-2">₦ {currencyFormat(amount)}</span>
-                    <span className="block text-md">NGN(₦) - Nigerian Naira</span>
+                    <span className="text-5xl font-semibold block mb-2">
+                        {currencyFormat(amount, '₦ 0.00')}
+                    </span>
+                    <span className="block text-md">
+                        NGN(₦) - Nigerian Naira
+                    </span>
                 </div>
                 <p className="text-sm text-gray-700">
                     1.00 {currency.name} = {rates[platform.id][currency.id]} NGN (₦) - Nigerian Naira

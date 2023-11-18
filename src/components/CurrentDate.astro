@@ -1,0 +1,14 @@
+---
+import Refresh from "./Refresh.astro";
+const date = new Date();
+const formatDate = date.toLocaleString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true
+}).replaceAll(/,/g, '');
+---
+
+<span class="text-amber-500">{formatDate}</span>

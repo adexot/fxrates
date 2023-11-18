@@ -92,5 +92,6 @@ function getNGNValueFromSend(res) {
 }
 
 function getNGNValueFromTG(res) {
-	return res.options?.filter(({isDefault}) => isDefault === true )[0].rate.value
+	const value = res.options?.filter(({isDefault}) => isDefault === true )[0].rate.value
+	return Number(value);
 }

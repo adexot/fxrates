@@ -83,15 +83,10 @@ import { Icon } from 'astro-icon'
           "border-b-2", 
           "border-b-fx-blue-light"
         );
-    
-        // `slice` here to remove the first `/` in pathname
         const currentFragment = window.location.hash;
-    
         const thisFragment = new URL(link.href).hash;
     
-        console.log({currentFragment, thisFragment});
         if (currentFragment === thisFragment) {
-          console.log('yes!!!!!')
           link.classList.add(
             "border-b-2", 
             "border-b-fx-blue-light"
@@ -100,5 +95,40 @@ import { Icon } from 'astro-icon'
       });
     }
 
+    function updateUrlHash(){
+      const headings = document.querySelectorAll('section');
+      const ioOptions = {
+          threshold: 0.85
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  const location = window.location.href.split('#')[0];
+                  const oldHash = window.location.hash;
+                  const sectionId = entry.target.id;
+                  let hash = '#' + sectionId;
+
+                  if (sectionId === "") {
+                      hash = "";
+                  } 
+                  if (hash != oldHash) {
+                      history.replaceState(null, null, location + hash);
+                      /* 
+                      * adding this here because the popevent isn't triggered automatically
+                      * https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event
+                      */
+                      updateNav()
+                  }
+              }
+          });
+      }, ioOptions);
+
+      headings.forEach(ha => {
+          observer.observe(ha);
+      });
+    }
+
     window.addEventListener('popstate', updateNav)
+    window.addEventListener('load', updateUrlHash)
   </script>

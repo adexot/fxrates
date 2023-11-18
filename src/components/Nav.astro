@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon'
 
 <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
     <div class="mx-auto max-w-7xl px-2 sm:px-2 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
+      <div class="relative flex items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
 
           <!-- Mobile menu button-->
@@ -40,10 +40,10 @@ import { Icon } from 'astro-icon'
           </div>
           <div class="hidden sm:ml-6 sm:block pl-5">
             <div class="flex space-x-4">
-              <a href="#rates" class="rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Rates</a>
-              <a href="#converter" class="rounded-md px-3 py-2 text-sm font-medium">Converter</a>
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium">Chart</a>
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium">Send feedback</a>
+              <a href="#rates" class="px-3 py-5 text-sm font-medium" aria-current="page">Rates</a>
+              <a href="#converter" class="px-3 py-5 text-sm font-medium">Converter</a>
+              <a href="#" class="px-3 py-5 text-sm font-medium">Chart</a>
+              <a href="#" class="px-3 py-5 text-sm font-medium">Send feedback</a>
             </div>
           </div>
         </div>
@@ -73,3 +73,32 @@ import { Icon } from 'astro-icon'
       </div>
     </div>
   </nav>
+
+  <script>
+    function updateNav(){
+      const navLinks = document.querySelectorAll("nav a");
+  
+      navLinks.forEach((link) => {
+        link.classList.remove(
+          "border-b-2", 
+          "border-b-fx-blue-light"
+        );
+    
+        // `slice` here to remove the first `/` in pathname
+        const currentFragment = window.location.hash;
+    
+        const thisFragment = new URL(link.href).hash;
+    
+        console.log({currentFragment, thisFragment});
+        if (currentFragment === thisFragment) {
+          console.log('yes!!!!!')
+          link.classList.add(
+            "border-b-2", 
+            "border-b-fx-blue-light"
+          );
+        }
+      });
+    }
+
+    window.addEventListener('popstate', updateNav)
+  </script>

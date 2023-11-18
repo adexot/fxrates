@@ -207,8 +207,8 @@ export default function Converter({ rates = defaultRates }) {
 
             <div className="bg-green-50 mt-16 p-8 rounded-lg">
                 <p className="text-sm text-gray-500">Currency Converter Result</p>
-                <div className="my-16">
-                    <span className="text-5xl font-semibold block mb-2">
+                <div className="my-16 overflow-auto">
+                    <span className="text-5xl font-semibold block mb-2 break-normal">
                         {currencyFormat(amount, '₦ 0.00')}
                     </span>
                     <span className="block text-md">

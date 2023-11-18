@@ -6,6 +6,16 @@ module.exports = {
 				"fx-blue-dark": "#213B54",
 				"fx-blue-light": "#12B5EA",
 				"fx-orange": "#EC7104",
+				"fx-gray-light": "#F7FAFE",
+			},
+			backgroundColor: {
+				"fx-gray-light": "#F7FAFE",
+			},
+			borderColor: {
+				"fx-gray-light": "#F7FAFE",
+			},
+			ring: {
+				"fx-blue-light": "#12B5EA",
 			},
 		},
 		fontFamily: {

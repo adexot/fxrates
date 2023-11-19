@@ -1,6 +1,7 @@
 ---
-import { engageKey } from 'utils/constants'
+import { engageKey } from "utils/constants";
 ---
+
 <html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
@@ -11,13 +12,16 @@ import { engageKey } from 'utils/constants'
 			content="All information about exchange rates in Naira"
 		/>
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<link href="https://fonts.cdnfonts.com/css/bl-melody" rel="stylesheet">
+		<link
+			href="https://fonts.cdnfonts.com/css/bl-melody"
+			rel="stylesheet"
+		/>
 		<title>FXrates</title>
 	</head>
 
 	<body class="text-fx-blue-dark">
 		<slot />
 		<!-- Engage SDK -->
-		<script define:vars={{ engageKey }}>!function(n){if(!window.Engage){window[n]=window[n]||{},window[n].queue=window[n].queue||[],window.Engage=window.Engage||{};for(var e=["init","identify","addAttribute","track"],i=0;i<e.length;i++)window.Engage[e[i]]=w(e[i]);var d=document.createElement("script");d.src="//d2969mkc0xw38n.cloudfront.net/next/engage.min.js",d.async=!0,document.head.appendChild(d)}function w(e){return function(){window[n].queue.push([e].concat([].slice.call(arguments)))}}}("engage");Engage.init(engageKey)</script>
+		<!-- <script define:vars={{ engageKey }}>!function(n){if(!window.Engage){window[n]=window[n]||{},window[n].queue=window[n].queue||[],window.Engage=window.Engage||{};for(var e=["init","identify","addAttribute","track"],i=0;i<e.length;i++)window.Engage[e[i]]=w(e[i]);var d=document.createElement("script");d.src="//d2969mkc0xw38n.cloudfront.net/next/engage.min.js",d.async=!0,document.head.appendChild(d)}function w(e){return function(){window[n].queue.push([e].concat([].slice.call(arguments)))}}}("engage");Engage.init(engageKey)</script> -->
 	</body>
 </html>

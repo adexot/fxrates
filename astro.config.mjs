@@ -14,6 +14,9 @@ export default defineConfig({
       alias: {
         "svgo": import.meta.env.PROD ? "svgo/dist/svgo.browser.js" : "svgo"
       }
+    },
+    ssr: {
+      noExternal: ['@nivo/core', '@nivo/line'],
     }
   },
 });

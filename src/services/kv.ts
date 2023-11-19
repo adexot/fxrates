@@ -7,21 +7,24 @@ function generateDevRateValues(length: number): ValueMap {
   const valueMap: ValueMap = [];
 
   time.forEach(val => {
+    const min = 700;
+    const max = 1370;
+
     valueMap.push([val, {
       send: {
-        "eur": getRandomArbitrary(650, 700),
-        "usd": getRandomArbitrary(650, 700),
-        "gbp": getRandomArbitrary(750, 850)
+        "eur": getRandomArbitrary(min, max),
+        "usd": getRandomArbitrary(min, max),
+        "gbp": getRandomArbitrary(750, max)
       },
       grey: {
-        "eur": getRandomArbitrary(650, 700),
-        "usd": getRandomArbitrary(650, 690),
-        "gbp": getRandomArbitrary(750, 850)
+        "eur": getRandomArbitrary(min, max),
+        "usd": getRandomArbitrary(min, max),
+        "gbp": getRandomArbitrary(min, max)
       },
       transferGo: {
-        "eur": getRandomArbitrary(650, 700),
-        // "usd": getRandomArbitrary(650, 690),
-        "gbp": getRandomArbitrary(750, 850)
+        "eur": getRandomArbitrary(min, max),
+        // "usd": getRandomArbitrary(min, max),
+        "gbp": getRandomArbitrary(min, max)
       },
     }])
   })
@@ -36,7 +39,7 @@ function generateLabel(timestamp: number): string {
 
 export async function getKVRates(): Promise<ValueMap> {
   if (isDev) {
-    return generateDevRateValues(10);
+    return generateDevRateValues(20);
   }
 
   // make call to worker to get the values

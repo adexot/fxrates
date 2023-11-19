@@ -3,6 +3,12 @@ import { getKVRates } from "../services/kv";
 import { generateNivoChartData, generateYAxis } from "../utils/helpers";
 import { useEffect, useState } from 'react';
 
+const currencyOptions = [
+    { title: 'EUR (€)', value: 'eur' },
+    { title: 'GBP(£)', value: 'gbp' },
+    { title: 'USD($)', value: 'usd' },
+]
+
 export default function NivoChart({ data: initialData }) {
     const [data, setData] = useState(initialData);
     const [currency, setCurrency] = useState('eur');
@@ -13,60 +19,53 @@ export default function NivoChart({ data: initialData }) {
         });
     }, [currency]);
 
-    // FIXME: make this a loader
+    // FIXME: make this a skeleton loader
     if (!data.length) return 'loading';
 
     const xTicks = data[0].data.map((d) => d.x);
     const yAxis = generateYAxis(data);
 
     return (
-        <div
-            className='w-full h-96'
-        >
-            <ResponsiveLineCanvas
-                data={data}
-                margin={{ top: 50, right: 20, bottom: 50, left: 50 }}
-                // xScale={{ type: 'linear' }}
-                yScale={{
-                    type: 'linear',
-                    min: yAxis.min,
-                    max: yAxis.max,
-                    nice: true
-                }}
-                // yFormat=" >-.2f"
-                curve="linear"
-                axisTop={null}
-                axisBottom={{
-                    tickValues: xTicks,
-                    tickSize: 0,
-                    tickPadding: 5,
-                    // tickRotation: 0,
-                    // format: '.2f',
-                    // legend: 'Time',
-                    // legendOffset: 36,
-                    // legendPosition: 'middle'
-                }}
-                axisLeft={{
-                    tickValues: yAxis.ticks,
-                    tickSize: 5,
-                    // tickPadding: 50,
-                    tickRotation: 0,
-                    // format: '.2s',
-                    // legend: 'Rate',
-                    // legendOffset: -40,
-                    // legendPosition: 'middle',
-                }}
-                enableGridX={false}
-                colors={d => d.color}
-                lineWidth={3}
-                enablePoints={false}
-                useMesh={true}
-                isInteractive={false}
-                // gridXValues={[0, 20, 40, 60, 80, 100, 120]}
-                gridYValues={yAxis.ticks}
+        <>
+            <FilterBar
+                option={currency}
+                options={currencyOptions}
+                onChange={setCurrency}
             />
+            <div className='w-full h-96'>
+                <ResponsiveLineCanvas
+                    data={data}
+                    margin={{ top: 50, right: 20, bottom: 50, left: 50 }}
+                    yScale={{
+                        type: 'linear',
+                        min: yAxis.min,
+                        max: yAxis.max,
+                        nice: true
+                    }}
+                    curve="linear"
+                    axisTop={null}
+                    axisBottom={{
+                        tickValues: xTicks,
+                        tickSize: 0,
+                        tickPadding: 5,
+                    }}
+                    axisLeft={{
+                        tickValues: yAxis.ticks,
+                        tickSize: 5,
+                        tickPadding: 0,
+                        tickRotation: 0,
+                    }}
+                    enableGridX={false}
+                    colors={d => d.color}
+                    lineWidth={3}
+                    enablePoints={false}
+                    useMesh={true}
+                    isInteractive={false}
+                    gridYValues={yAxis.ticks}
+                />
+            </div>
             <Legends data={data} />
-        </div>
+        </>
     )
 }
 
@@ -85,6 +84,20 @@ function Legends({ data }) {
                     <li className='inline-flex items-center px-3' key={`${d.id}-${d.color}`}>
                         <div className={str}></div>
                         <span className='text-xs pl-1'>{d.id}</span>
+                    </li>
+                )
+            })}
+        </ul>
+    )
+}
+
+function FilterBar({ options, onChange, option }) {
+    return (
+        <ul className='inline-flex text-sm mt-20 text-slate-400'>
+            {options.map(o => {
+                return (
+                    <li className={`cursor-pointer px-3 ${o.value === option ? 'text-fx-blue-light' : ''}`} key={o.value} onClick={() => onChange(o.value)}>
+                        {o.title}
                     </li>
                 )
             })}

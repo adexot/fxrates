@@ -38,8 +38,8 @@ export default function NivoChart({ data: initialData }) {
                 axisTop={null}
                 axisBottom={{
                     tickValues: xTicks,
-                    // tickSize: 5,
-                    // tickPadding: 5,
+                    tickSize: 0,
+                    tickPadding: 5,
                     // tickRotation: 0,
                     // format: '.2f',
                     // legend: 'Time',
@@ -57,7 +57,7 @@ export default function NivoChart({ data: initialData }) {
                     // legendPosition: 'middle',
                 }}
                 enableGridX={false}
-                colors={{ scheme: 'nivo' }}
+                colors={d => d.color}
                 lineWidth={3}
                 enablePoints={false}
                 useMesh={true}
@@ -65,6 +65,29 @@ export default function NivoChart({ data: initialData }) {
                 // gridXValues={[0, 20, 40, 60, 80, 100, 120]}
                 gridYValues={yAxis.ticks}
             />
+            <Legends data={data} />
         </div>
+    )
+}
+
+const colorMap = {
+    '#219653': 'bg-fx-chart-one',
+    '#F2994A': "bg-fx-chart-two",
+    '#EB5757': "bg-fx-chart-three",
+}
+function Legends({ data }) {
+    return (
+        <ul className='text-center'>
+            {data.map(d => {
+                const str = `h-2 w-2 rounded-full ${colorMap[d.color]} inline-block`;
+
+                return (
+                    <li className='inline-flex items-center px-3' key={`${d.id}-${d.color}`}>
+                        <div className={str}></div>
+                        <span className='text-xs pl-1'>{d.id}</span>
+                    </li>
+                )
+            })}
+        </ul>
     )
 }

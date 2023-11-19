@@ -11,6 +11,9 @@ module.exports = {
 			},
 			backgroundColor: {
 				"fx-gray-light": "#F7FAFE",
+				"fx-chart-one": '#219653',
+				"fx-chart-two": '#F2994A',
+				"fx-chart-three": '#EB5757',
 			},
 			borderColor: {
 				"fx-gray-light": "#F7FAFE",

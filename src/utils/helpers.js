@@ -87,14 +87,17 @@ export function generateNivoChartData(data, currency= 'eur') {
     {
       id: 'Send',
       data: send,
+      color: '#219653'
     },
     {
       id: 'Grey',
       data: grey,
+      color: '#F2994A'
     },
     {
       id: 'TransferGo',
       data: transferGo,
+      color: '#EB5757'
     }
   ]
 }

@@ -1,0 +1,229 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<nav class="bg-white dark:bg-dark-fx-blue sticky top-0 z-50">
+  <div class="mx-auto max-w-7xl px-2 sm:px-2 lg:px-8">
+    <div class="relative flex items-center justify-between">
+      <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
+        <!-- Mobile menu button-->
+        <button
+          type="button"
+          id="mobile-menu-btn"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-fx-blue-dark dark:text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="absolute -inset-0.5"></span>
+          <span class="sr-only">Open main menu</span>
+          <!--
+              Icon when menu is closed.
+  
+              Menu open: "hidden", Menu closed: "block"
+            -->
+          <svg
+            class="block h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+          </svg>
+          <!--
+              Icon when menu is open.
+  
+              Menu open: "block", Menu closed: "hidden"
+            -->
+          <svg
+            class="hidden h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Desktop left side   -->
+      <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
+        <div class="flex flex-shrink-0 items-center h-14">
+          <Icon name="logo" size="24" />
+          <span
+            class="text-xl font-medium text-fx-blue-dark dark:text-white pl-1"
+          >
+            Fxrates
+          </span>
+        </div>
+        <div class="hidden sm:ml-6 sm:block pl-5">
+          <div class="flex space-x-4">
+            <a
+              href="#rates"
+              class="px-3 py-5 text-sm font-medium"
+              aria-current="page"
+            >
+              Rates
+            </a>
+            <a href="#chart" class="px-3 py-5 text-sm font-medium">Chart</a>
+            <a href="#converter" class="px-3 py-5 text-sm font-medium">
+              Converter
+            </a>
+            <a
+              href="mailto:hellofxrates@gmail.com?subject=Hello%20%40fxrates"
+              class="px-3 py-5 text-sm font-medium"
+            >
+              Send feedback
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- right side -->
+      <div
+        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 mr-8 sm:mr-0"
+      >
+        <button type="button" id="light-mode-btn" class="relative px-2">
+          <Icon name="moon" size="24" />
+        </button>
+        <button type="button" id="dark-mode-btn" class="relative px-2">
+          <Icon name="sun" size="24" />
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu, show/hide based on menu state. -->
+<div
+  class="sm:hidden fixed top-12 left-0 right-0 bg-white dark:bg-dark-fx-blue z-10 hidden"
+  id="mobile-menu"
+>
+  <div class="space-y-1 px-2 pb-3 pt-2">
+    <!-- Current: "bg-gray-900 text-white", Default: "text-fx-blue-dark dark:text-white hover:bg-gray-700 hover:text-white" -->
+    <a
+      href="#rates"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      aria-current="page">Rates</a
+    >
+    <a
+      href="#chart"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      >Chart</a
+    >
+    <a
+      href="#converter"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      >Converter</a
+    >
+    <a
+      href="mailto:hellofxrates@gmail.com?subject=Hello%20%40fxrates"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      >Send Feedback</a
+    >
+  </div>
+</div>
+
+<script>
+  function updateNav() {
+    const navLinks = document.querySelectorAll("nav a");
+
+    navLinks.forEach((link) => {
+      link.classList.remove("border-b-2", "border-b-fx-blue-light");
+      const currentFragment = window.location.hash;
+      const thisFragment = new URL(link.href).hash;
+
+      if (currentFragment === thisFragment) {
+        link.classList.add("border-b-2", "border-b-fx-blue-light");
+      }
+    });
+  }
+
+  function updateUrlHash() {
+    const headings = document.querySelectorAll("section");
+    const ioOptions = {
+      threshold: 0.85,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const location = window.location.href.split("#")[0];
+          const oldHash = window.location.hash;
+          const sectionId = entry.target.id;
+          let hash = "#" + sectionId;
+
+          if (sectionId === "") {
+            hash = "";
+          }
+          if (hash != oldHash) {
+            history.replaceState(null, null, location + hash);
+            /*
+             * adding this here because the popevent isn't triggered automatically
+             * https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event
+             */
+            updateNav();
+          }
+        }
+      });
+    }, ioOptions);
+
+    headings.forEach((ha) => {
+      observer.observe(ha);
+    });
+  }
+
+  function manageDarkMode() {
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    const darkModeBtn = document.getElementById("dark-mode-btn");
+    const lightModeBtn = document.getElementById("light-mode-btn");
+
+    darkModeBtn.addEventListener("click", (e) => {
+      document.documentElement.classList.remove("light");
+      document.documentElement.classList.add("dark");
+      // Whenever the user explicitly chooses dark mode
+      localStorage.theme = "dark";
+    });
+
+    lightModeBtn.addEventListener("click", (e) => {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
+      // Whenever the user explicitly chooses dark mode
+      localStorage.theme = "light";
+    });
+  }
+
+  function toggleMobileMenu() {
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    mobileMenuBtn.addEventListener("click", (e) => {
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileMenu.ariaExpanded =
+        mobileMenu.ariaExpanded === "true" ? "false" : "true";
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+
+  manageDarkMode();
+  window.addEventListener("popstate", updateNav);
+  window.addEventListener("load", updateUrlHash);
+  toggleMobileMenu();
+</script>

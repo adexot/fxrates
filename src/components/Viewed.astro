@@ -1,0 +1,25 @@
+---
+const avatars = ["one", "two", "three", "four", "five", "six"];
+---
+
+<section class="mx-auto max-w-4xl px-2 py-16 my-16 text-center">
+    <h3 class="text-xl font-medium text-fx-blue-dark dark:text-white">
+        9,153,489 people viewed our exchange rates
+    </h3>
+    <p class="text-lg mx-auto mt-4 max-w-3xl">
+        FxRates is used across 30+ countries, and we have been helping people
+        make better financial decision in a faster way.
+    </p>
+
+    <div class="flex -space-x-2 mt-4 overflow-hidden justify-center">
+        {
+            avatars.map((num) => (
+                <img
+                    class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
+                    src={`images/avatar_${num}.png`}
+                    alt=""
+                />
+            ))
+        }
+    </div>
+</section>

@@ -1,0 +1,21 @@
+---
+import Calc from "components/Calc.jsx";
+import CurrentDate from "./CurrentDate.astro";
+import Refresh from "./Refresh.astro";
+
+const { rates } = Astro.props;
+---
+
+<section class="mx-auto max-w-4xl px-2 py-16 text-center" id="converter">
+    <h3 class="text-xl font-medium text-fx-blue-dark dark:text-white">
+        Currency Converter for USD, GBP & EUR
+    </h3>
+    <p class="text-lg mx-auto mt-4">
+        We use the mid-market rate for our Converter. This is for informational
+        purposes only. You won’t receive this rate when sending /receive money.
+        The live Nigerian Naira exchange rate (NGN) as of <CurrentDate />. <Refresh
+        />
+    </p>
+
+    <Calc rates={rates} client:only="react" />
+</section>

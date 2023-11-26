@@ -109,7 +109,6 @@ import { Icon } from "astro-icon";
     const name = form.elements["name"];
     const email = form.elements["email"];
     const date = new Date();
-    console.log({ name: name.value, email: email.value });
 
     Engage.identify({
       id: date.getTime(),

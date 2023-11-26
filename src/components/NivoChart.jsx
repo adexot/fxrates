@@ -11,6 +11,7 @@ const currencyOptions = [
 
 export default function NivoChart({ data: initialData }) {
     const [data, setData] = useState(initialData);
+    const [textColor, setTextColor] = useState('#213B54')
     const [currency, setCurrency] = useState('eur');
 
     useEffect(() => {
@@ -19,11 +20,42 @@ export default function NivoChart({ data: initialData }) {
         });
     }, [currency]);
 
+    useEffect(() => {
+        // check to update theme on first load
+        if (document.documentElement.classList.contains('dark')) {
+            setTextColor('#FFF');
+        }
+
+        new MutationObserver(function (mutations) {
+            if (mutations[0].target.classList.contains('dark')) {
+                setTextColor('#FFF')
+            } else {
+                setTextColor('#213B54')
+            }
+        }).observe(
+            document.documentElement,
+            { attributes: true }
+        );
+    }, [])
+
     // FIXME: make this a skeleton loader
     if (!data.length) return 'loading';
 
     const xTicks = data[0].data.map((d) => d.x);
     const yAxis = generateYAxis(data);
+
+    const theme = {
+        axis: {
+            ticks: {
+                text: {
+                    fill: textColor,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    letterSpacing: '0.01em',
+                }
+            }
+        },
+    };
 
     return (
         <>
@@ -48,6 +80,7 @@ export default function NivoChart({ data: initialData }) {
                         tickValues: xTicks,
                         tickSize: 0,
                         tickPadding: 5,
+
                     }}
                     axisLeft={{
                         tickValues: yAxis.ticks,
@@ -62,6 +95,7 @@ export default function NivoChart({ data: initialData }) {
                     useMesh={true}
                     isInteractive={false}
                     gridYValues={yAxis.ticks}
+                    theme={theme}
                 />
             </div>
             <Legends data={data} />

@@ -142,7 +142,7 @@ import { Icon } from "astro-icon";
       const currentFragment = window.location.hash;
       const thisFragment = new URL(link.href).hash;
 
-      if (currentFragment === thisFragment) {
+      if (currentFragment === thisFragment && currentFragment !== "") {
         link.classList.add("border-b-2", "border-b-fx-blue-light");
       }
     });

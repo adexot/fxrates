@@ -1,43 +1,25 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import Card from "../components/Card.astro";
+import Footer from "components/Footer.astro";
+import Intro from "components/Intro.astro";
+import Nav from "components/Nav.astro";
+import Rates from "components/Rates.astro";
+import Subscription from "components/Subscription.astro";
+import Viewed from "components/Viewed.astro";
+import PageLayout from "layouts/PageLayout.astro";
+import Converter from "components/Converter.astro";
+
 import { getAllRates } from "../services/rates";
-import Graph from "../components/Graph.astro";
-
-const result = await getAllRates();
-
-const withValue = Astro.url.searchParams.get("with");
-const showGraph = withValue?.includes("graph");
+import Chart from "components/Chart.astro";
+const rates = await getAllRates();
 ---
 
 <PageLayout>
-  <div class="py-12 max-w-7xl mx-auto">
-    <div class="px-4 sm:px-6 lg:px-8">
-      <div class="sm:text-center">
-        <h2
-          class="text-base text-green-600 font-semibold tracking-wide uppercase"
-        >
-          FX rates
-        </h2>
-        <p
-          class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-fx-blue-dark sm:text-4xl"
-        >
-          A better way to see exchange rates
-        </p>
-        <p class="mt-4 max-w-2xl text-xl text-fx-blue-dark lg:mx-auto">
-          Exchange rates presentations don't have to be boring and annoying like
-          the Naira value 😞. This is a mission to give it a face lift with
-          delightful UI and experience 🥳.
-        </p>
-      </div>
-    </div>
-
-    {showGraph && <Graph />}
-
-    {
-      Object.keys(result).map((provider) => (
-        <Card rate={result[provider]} title={provider} />
-      ))
-    }
-  </div>
+  <Nav />
+  <Intro />
+  <Rates rates={rates} />
+  <Viewed />
+  <Chart />
+  <Converter rates={rates} />
+  <Subscription />
+  <Footer />
 </PageLayout>

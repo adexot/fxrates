@@ -2,14 +2,15 @@
 import { Icon } from "astro-icon";
 ---
 
-<nav class="bg-white sticky top-0 z-50">
+<nav class="bg-white dark:bg-dark-fx-blue sticky top-0 z-50">
   <div class="mx-auto max-w-7xl px-2 sm:px-2 lg:px-8">
     <div class="relative flex items-center justify-between">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button
           type="button"
-          class="relative inline-flex items-center justify-center rounded-md p-2 text-fx-blue-dark hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          id="mobile-menu-btn"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-fx-blue-dark dark:text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
@@ -55,12 +56,12 @@ import { Icon } from "astro-icon";
       </div>
 
       <!-- Desktop left side   -->
-      <div
-        class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
-      >
+      <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
         <div class="flex flex-shrink-0 items-center h-14">
           <Icon name="logo" size="24" />
-          <span class="text-xl font-medium text-fx-blue-dark pl-1">
+          <span
+            class="text-xl font-medium text-fx-blue-dark dark:text-white pl-1"
+          >
             Fxrates
           </span>
         </div>
@@ -89,12 +90,12 @@ import { Icon } from "astro-icon";
 
       <!-- right side -->
       <div
-        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 mr-8 sm:mr-0 dark"
       >
-        <button type="button" class="relative px-2">
+        <button type="button" id="dark-mode-btn" class="relative px-2">
           <Icon name="moon" size="24" />
         </button>
-        <button type="button" class="relative px-2">
+        <button type="button" id="light-mode-btn" class="relative px-2">
           <Icon name="sun" size="24" />
         </button>
       </div>
@@ -103,28 +104,31 @@ import { Icon } from "astro-icon";
 </nav>
 
 <!-- Mobile menu, show/hide based on menu state. -->
-<div class="sm:hidden hidden" id="mobile-menu">
+<div
+  class="sm:hidden fixed top-12 left-0 right-0 bg-white dark:bg-dark-fx-blue z-10 hidden"
+  id="mobile-menu"
+>
   <div class="space-y-1 px-2 pb-3 pt-2">
-    <!-- Current: "bg-gray-900 text-white", Default: "text-fx-blue-dark hover:bg-gray-700 hover:text-white" -->
+    <!-- Current: "bg-gray-900 text-white", Default: "text-fx-blue-dark dark:text-white hover:bg-gray-700 hover:text-white" -->
     <a
-      href="#"
-      class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-      aria-current="page">Dashboard</a
+      href="#rates"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      aria-current="page">Rates</a
+    >
+    <a
+      href="#chart"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      >Chart</a
+    >
+    <a
+      href="#converter"
+      class="text-fx-blue-dark dark:text-white block rounded-md px-3 py-2 text-base font-medium"
+      >Converter</a
     >
     <a
       href="#"
-      class="text-fx-blue-dark block rounded-md px-3 py-2 text-base font-medium"
-      >Team</a
-    >
-    <a
-      href="#"
-      class="text-fx-blue-dark block rounded-md px-3 py-2 text-base font-medium"
-      >Projects</a
-    >
-    <a
-      href="#"
-      class="text-fx-blue-dark block rounded-md px-3 py-2 text-base font-medium"
-      >Calendar</a
+      class="block rounded-md px-3 py-2 text-base font-medium text-gray-200 pointer-events-none"
+      >Send Feedback</a
     >
   </div>
 </div>
@@ -178,6 +182,48 @@ import { Icon } from "astro-icon";
     });
   }
 
+  function manageDarkMode() {
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    const darkModeBtn = document.getElementById("dark-mode-btn");
+    const lightModeBtn = document.getElementById("light-mode-btn");
+
+    darkModeBtn.addEventListener("click", (e) => {
+      document.documentElement.classList.remove("light");
+      document.documentElement.classList.add("dark");
+      // Whenever the user explicitly chooses dark mode
+      localStorage.theme = "dark";
+    });
+
+    lightModeBtn.addEventListener("click", (e) => {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
+      // Whenever the user explicitly chooses dark mode
+      localStorage.theme = "light";
+    });
+  }
+
+  function toggleMobileMenu() {
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    mobileMenuBtn.addEventListener("click", (e) => {
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileMenu.ariaExpanded =
+        mobileMenu.ariaExpanded === "true" ? "false" : "true";
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+
+  manageDarkMode();
   window.addEventListener("popstate", updateNav);
   window.addEventListener("load", updateUrlHash);
+  toggleMobileMenu();
 </script>

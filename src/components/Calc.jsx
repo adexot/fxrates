@@ -72,7 +72,7 @@ export function ListBoxComponent({ items, label, selected, setSelected }) {
                         {label}
                     </Listbox.Label>
                     <div className="relative mt-2">
-                        <Listbox.Button className="relative w-full cursor-default rounded-sm bg-white py-2 pl-3 pr-10 text-left'text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-fx-blue-light sm:text-sm sm:leading-6">
+                        <Listbox.Button className="relative w-full cursor-default rounded-sm bg-white dark:bg-dark-fx-blue py-2 pl-3 pr-10 text-left'text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-fx-blue-light sm:text-sm sm:leading-6">
                             <span className="flex items-center">
                                 {selected.avatar && (
                                     <img src={selected.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
@@ -164,7 +164,7 @@ export default function Converter({ rates = defaultRates }) {
     return (
         <section className="mx-auto max-w-4xl px-2 mt-16 text-center">
             <div className="mt-10 grid grid-cols-1 gap-x-6 sm:grid-cols-10 text-left">
-                <div className="sm:col-span-3">
+                <div className="sm:col-span-3 mt-6">
                     <ListBoxComponent
                         items={currencies}
                         label='Currency'
@@ -173,7 +173,7 @@ export default function Converter({ rates = defaultRates }) {
                     />
                 </div>
 
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4 mt-6">
                     <label
                         htmlFor="last-name"
                         className="block text-sm font-normal leading-6'text-fx-blue-dark"
@@ -187,7 +187,7 @@ export default function Converter({ rates = defaultRates }) {
                             min={0}
                             maxLength={7}
                             autoComplete="famount"
-                            className="block w-full rounded-sm border-0 p-2'text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-fx-blue-light sm:text-sm sm:leading-6"
+                            className="block w-full rounded-sm border-0 p-2'text-fx-blue-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-fx-blue-light sm:text-sm sm:leading-6 dark:bg-dark-fx-blue"
                             placeholder="Enter an amount e.g $3,423.12"
                             onChange={handleInputChange}
                             value={debouncedValue}
@@ -195,7 +195,7 @@ export default function Converter({ rates = defaultRates }) {
                     </div>
                 </div>
 
-                <div className="sm:col-span-3">
+                <div className="sm:col-span-3 mt-6">
                     <ListBoxComponent
                         items={platforms}
                         label='Platform'
@@ -205,8 +205,8 @@ export default function Converter({ rates = defaultRates }) {
                 </div>
             </div>
 
-            <div className="bg-green-50 mt-16 p-8 rounded-lg">
-                <p className="text-sm text-gray-500">Currency Converter Result</p>
+            <div className="bg-green-50 dark:bg-[#38683a] mt-16 p-8 rounded-lg">
+                <p className="text-sm text-gray-500 dark:text-white">Currency Converter Result</p>
                 <div className="my-16 overflow-auto">
                     <span className="text-5xl font-semibold block mb-2 break-normal">
                         {currencyFormat(amount, '₦ 0.00')}
@@ -215,10 +215,10 @@ export default function Converter({ rates = defaultRates }) {
                         NGN(₦) - Nigerian Naira
                     </span>
                 </div>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 dark:text-white">
                     1.00 {currency.name} = {rates[platform.id][currency.id]} NGN (₦) - Nigerian Naira
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 dark:text-white">
                     1.00 NGN(₦) - Nigerian Naira = {(1 / conversionRate).toFixed(8)} {currency.name}
                 </p>
             </div>

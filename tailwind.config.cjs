@@ -1,4 +1,5 @@
 module.exports = {
+	darkMode: 'class',
 	content: ['./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}'],
 	theme: {
 		extend: {
@@ -14,9 +15,13 @@ module.exports = {
 				"fx-chart-one": '#219653',
 				"fx-chart-two": '#F2994A',
 				"fx-chart-three": '#EB5757',
+				"dark-fx-blue": "#0D1822",
+				"dark-fx-blue-light": "#142332",
 			},
 			borderColor: {
 				"fx-gray-light": "#F7FAFE",
+				"dark-fx-blue-light": "#142332",
+				
 			},
 			ring: {
 				"fx-blue-light": "#12B5EA",

@@ -64,7 +64,9 @@ export default function NivoChart({ data: initialData }) {
                 options={currencyOptions}
                 onChange={setCurrency}
             />
+
             <div className='w-full h-96'>
+                <p className='text-sm translate-y-10 ml-4 font-normal'>NGN (₦)</p>
                 <ResponsiveLineCanvas
                     data={data}
                     margin={{ top: 50, right: 20, bottom: 50, left: 50 }}
@@ -75,12 +77,10 @@ export default function NivoChart({ data: initialData }) {
                         nice: true
                     }}
                     curve="linear"
-                    axisTop={null}
                     axisBottom={{
                         tickValues: xTicks,
                         tickSize: 0,
                         tickPadding: 5,
-
                     }}
                     axisLeft={{
                         tickValues: yAxis.ticks,

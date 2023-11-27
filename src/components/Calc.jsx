@@ -206,7 +206,9 @@ export default function Converter({ rates = defaultRates }) {
             </div>
 
             <div className="bg-green-50 dark:bg-[#38683a] mt-16 p-8 rounded-lg">
-                <p className="text-sm text-gray-500 dark:text-white">Currency Converter Result</p>
+                <p className="text-sm text-gray-500 dark:text-white">
+                    Estimated amount in NGN(₦)
+                </p>
                 <div className="my-16 overflow-auto">
                     <span className="text-5xl font-semibold block mb-2 break-normal">
                         {currencyFormat(amount, '₦ 0.00')}

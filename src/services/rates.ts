@@ -97,7 +97,7 @@ function getNGNValueFromTG(res) {
 }
 
 export function getCBNRates(): Promise<Record<string, number>> {
-	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp').then(({data}) => {
+	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp?_=1699958900612').then(({data}) => {
 		// filter by currency
 		const usd = data.filter(el => el.currency.toLowerCase() === 'us dollar');
 		const gbp = data.filter(el => el.currency.toLowerCase() === 'pounds sterling');

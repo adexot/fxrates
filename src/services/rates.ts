@@ -71,7 +71,7 @@ async function getTransferGoRates(){
 	// Send value
 	batchResponse['eur'] = getNGNValueFromTG(TGEURRate);
 	batchResponse['gbp'] = getNGNValueFromTG(TGGBPRate);
-	// batchResponse['usd'] = getNGNValueFromTG(TGUSDRate);
+	// batchResponse['usd'] = getNGNValueFromTG(TGUSDRate); // not available yet
 
 
 	return batchResponse;
@@ -81,8 +81,7 @@ export async function getAllRates() {
 	const batchResponse = {
 		grey: await getGreyRates(),
 		send: await getSendRates(),
-		transferGo: await getTransferGoRates(),
-		cbn: await getCBNRates(),
+		transferGo: await getTransferGoRates()
 	}
 
 	return batchResponse;
@@ -97,16 +96,16 @@ function getNGNValueFromTG(res) {
 	return Number(value);
 }
 
-export function getCBNRates(){
-	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp?_=1699958900612').then(({data}) => {
+export function getCBNRates(): Promise<Record<string, number>> {
+	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp').then(({data}) => {
 		// filter by currency
 		const usd = data.filter(el => el.currency.toLowerCase() === 'us dollar');
 		const gbp = data.filter(el => el.currency.toLowerCase() === 'pounds sterling');
 		const eur = data.filter(el => el.currency.toLowerCase() === 'euro');
 
-		const usdRate = usd[0].buyingrate;
-		const eurRate = eur[0].buyingrate;
-		const gbpRate = gbp[0].buyingrate;
+		const usdRate = usd[0].sellingrate;
+		const eurRate = eur[0].sellingrate;
+		const gbpRate = gbp[0].sellingrate;
 
 		return {
 			usd: Number(usdRate),

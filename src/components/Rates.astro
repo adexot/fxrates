@@ -11,13 +11,17 @@ const platforms = {
     grey: "Grey Finance",
     send: "Send App",
     transferGo: "TransferGo",
+    cbn: "CBN",
 };
 
 const charts = Object.entries(rates).map(([key, value]) => ({
     title: platforms[key],
     ...value,
     charts: null,
-    image: `images/${key.toLowerCase()}.png`,
+    image:
+        key === "cbn"
+            ? "https://www.cbn.gov.ng/images/HighResoultion/cbnlogotrans.gif"
+            : `images/${key.toLowerCase()}.png`,
 }));
 ---
 

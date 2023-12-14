@@ -82,6 +82,7 @@ export async function getAllRates() {
 		grey: await getGreyRates(),
 		send: await getSendRates(),
 		transferGo: await getTransferGoRates(),
+		cbn: await getCBNRates(),
 	}
 
 	return batchResponse;
@@ -94,4 +95,23 @@ function getNGNValueFromSend(res) {
 function getNGNValueFromTG(res) {
 	const value = res.options?.filter(({isDefault}) => isDefault === true )[0].rate.value
 	return Number(value);
+}
+
+export function getCBNRates(){
+	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp?_=1699958900612').then(({data}) => {
+		// filter by currency
+		const usd = data.filter(el => el.currency.toLowerCase() === 'us dollar');
+		const gbp = data.filter(el => el.currency.toLowerCase() === 'pounds sterling');
+		const eur = data.filter(el => el.currency.toLowerCase() === 'euro');
+
+		const usdRate = usd[0].buyingrate;
+		const eurRate = eur[0].buyingrate;
+		const gbpRate = gbp[0].buyingrate;
+
+		return {
+			usd: Number(usdRate),
+			eur: Number(eurRate),
+			gbp: Number(gbpRate)
+		}
+	}).catch(console.error);
 }

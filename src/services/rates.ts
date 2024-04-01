@@ -1,4 +1,5 @@
 import { fetchUtil } from "../utils/helpers";
+import { googleAPIKey } from "utils/constants";
 
 // const generateSendUrl = path => `https://sendgateway.myflutterwave.com/api/v1/config/countrypairs/${path}`;
 
@@ -77,16 +78,6 @@ async function getTransferGoRates(){
 	return batchResponse;
 }
 
-export async function getAllRates() {
-	const batchResponse = {
-		grey: await getGreyRates(),
-		send: await getSendRates(),
-		transferGo: await getTransferGoRates()
-	}
-
-	return batchResponse;
-}
-
 function getNGNValueFromSend(res) {
 	return res.filter(el => el.toCurrencyCode.toLowerCase() === 'ngn')[0]?.exchangeRate;
 }
@@ -94,6 +85,33 @@ function getNGNValueFromSend(res) {
 function getNGNValueFromTG(res) {
 	const value = res.options?.filter(({isDefault}) => isDefault === true )[0].rate.value
 	return Number(value);
+}
+
+async function getRatesFromSheet(){
+	return fetchUtil(`https://sheets.googleapis.com/v4/spreadsheets/11oLB6gk9NCOcBlFG9ZmyH4hABd7hHiHj4qVW8_Lni8w/values/Sheet1!A5:D18?key=${googleAPIKey}`).then(({values}) => {
+		console.log(values);
+		return values.reduce((acc, cur) => {
+			acc[cur[0].toLowerCase()] = {
+				usd: cur[1],
+				eur: cur[2],
+				gbp: cur[3],
+			}
+			console.log(acc);
+			return acc;
+		}, {})
+	}).catch(catchAndReturnEmptyMap);
+}
+
+export async function getAllRates() {
+	const rates = await getRatesFromSheet();
+	const batchResponse = {
+		grey: await getGreyRates(),
+		send: await getSendRates(),
+		transferGo: await getTransferGoRates(),
+		...rates
+	}
+
+	return batchResponse;
 }
 
 export function getCBNRates(): Promise<Record<string, number>> {

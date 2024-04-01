@@ -3,7 +3,7 @@ export function getRandomArbitrary(min, max) {
 }
 
 export function fetchUtil(url, options = {},) {
-  return fetch(url, options,).then((res) => {
+  return fetch(url, options).then((res) => {
     if (!res.ok) {
       return res.json().then((json,) => {
         if (res.status.toString() === '401') {

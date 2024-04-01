@@ -71,10 +71,10 @@ const charts = Object.entries(rates).map(([key, value]) => ({
                                     <span>{chart.title}</span>
                                 </td>
                                 <td class="p-6 text-base">
-                                    {currencyFormat(chart.eur)}
+                                    {currencyFormat(chart.eur, "-")}
                                 </td>
                                 <td class="p-6 text-base">
-                                    {currencyFormat(chart.gbp)}
+                                    {currencyFormat(chart.gbp, "-")}
                                 </td>
                                 <td class="p-6 text-base">
                                     {currencyFormat(chart.usd, "-")}

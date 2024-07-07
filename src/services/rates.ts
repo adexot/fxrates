@@ -89,14 +89,12 @@ function getNGNValueFromTG(res) {
 
 async function getRatesFromSheet(){
 	return fetchUtil(`https://sheets.googleapis.com/v4/spreadsheets/11oLB6gk9NCOcBlFG9ZmyH4hABd7hHiHj4qVW8_Lni8w/values/Sheet1!A5:D18?key=${googleAPIKey}`).then(({values}) => {
-		console.log(values);
 		return values.reduce((acc, cur) => {
 			acc[cur[0].toLowerCase()] = {
 				usd: cur[1],
 				eur: cur[2],
 				gbp: cur[3],
 			}
-			console.log(acc);
 			return acc;
 		}, {})
 	}).catch(catchAndReturnEmptyMap);

@@ -26,6 +26,7 @@ export default function NivoChart({ data: initialData }) {
             setTextColor('#FFF');
         }
 
+        // handle change in theme
         new MutationObserver(function (mutations) {
             if (mutations[0].target.classList.contains('dark')) {
                 setTextColor('#FFF')

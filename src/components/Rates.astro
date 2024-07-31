@@ -89,21 +89,21 @@ const charts = Object.entries(rates).map(([key, value]) => ({
 </section>
 
 <script>
-    import { getCBNRates } from "services/rates";
+    // import { getCBNRates } from "services/rates";
     import { currencyFormat } from "utils/helpers";
 
     // wrapping this in timeout to avoid render blocking
-    setTimeout(() => {
-        getCBNRates().then((data) => {
-            const dom = generateRateRow({
-                ...data,
-                title: "CBN",
-                image: "https://www.cbn.gov.ng/images/HighResoultion/cbnlogotrans.gif",
-            });
+    // setTimeout(() => {
+    //     getCBNRates().then((data) => {
+    //         const dom = generateRateRow({
+    //             ...data,
+    //             title: "CBN",
+    //             image: "https://www.cbn.gov.ng/images/HighResoultion/cbnlogotrans.gif",
+    //         });
 
-            document.getElementById("rate-body").appendChild(dom);
-        });
-    }, 0);
+    //         document.getElementById("rate-body").appendChild(dom);
+    //     });
+    // }, 0);
 
     function generateRateRow(data) {
         const frag = document.createDocumentFragment();

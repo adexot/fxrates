@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -47,26 +49,13 @@ function getDayAndTime(timestamp) {
  * shown
  */
 export function generateNivoChartData(data, currency= 'eur') {
-  const dates = [];
   const send = [];
   const grey = [];
   const transferGo = [];
 
-  data.slice(-7).forEach(entry => {
-    const {day, time} = getDayAndTime(entry[0]);
+  data.forEach(entry => {
     const obj = entry[1];
-    let x;
-
-    // skip duplicate date
-    if(dates.includes(day)) {
-      // use time
-      x = time;
-      dates.push(time);
-
-    } else {
-      x = day;
-      dates.push(day);
-    }
+    const x = dayjs(entry[0]).format('YYYY-MM-DD HH:mm');
 
     send.push({
       x,

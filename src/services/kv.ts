@@ -37,13 +37,27 @@ function generateLabel(timestamp: number): string {
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
-export async function getKVRates(): Promise<ValueMap> {
-  if (isDev) {
-    return generateDevRateValues(20);
+type Filter = {
+  from: string;
+  to: string;
+  count: number;
+}
+export async function getKVRates(filter?: Filter): Promise<ValueMap> {
+  // if (isDev) {
+  //   return generateDevRateValues(20);
+  // }
+  
+  let query = '';
+  if(filter){
+    Object.keys(filter).forEach(key => {
+      if(filter[key]){
+        query += `${key}=${filter[key]}&`
+      }
+    })
   }
 
   // make call to worker to get the values
-  const kvRates = await fetchUtil('https://fxrates-worker.adexot.workers.dev');
+  const kvRates = await fetchUtil(`https://fxrates-worker.adexot.workers.dev?${query}`);
   return kvRates.data;
 }
 

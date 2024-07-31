@@ -46,11 +46,12 @@ export default function NivoChart({ data: initialData }) {
     const [currency, setCurrency] = useState('eur');
     const [dateRange, setDateRange] = useState(86400000);
     const activeDR = xAxis[dateRange];
+    const nivoData = generateNivoChartData(data, currency);
 
     useEffect(() => {
         const from = Date.now() - activeDR.ms;
         getKVRates({ from }).then(res => {
-            setData(generateNivoChartData(res, currency))
+            setData(res)
         });
     }, [dateRange]);
 
@@ -76,20 +77,7 @@ export default function NivoChart({ data: initialData }) {
     // FIXME: make this a skeleton loader
     if (!data.length) return 'loading';
 
-    const yAxis = generateYAxis(data);
-
-    const theme = {
-        axis: {
-            ticks: {
-                text: {
-                    fill: textColor,
-                    fontSize: 12,
-                    fontWeight: 400,
-                    letterSpacing: '0.01em',
-                }
-            }
-        },
-    };
+    const yAxis = generateYAxis(nivoData);
 
     return (
         <>
@@ -97,7 +85,9 @@ export default function NivoChart({ data: initialData }) {
                 <Switcher
                     option={currency}
                     options={currencyOptions}
-                    onChange={setCurrency}
+                    onChange={value => {
+                        setCurrency(value)
+                    }}
                 />
                 <Switcher
                     option={dateRange}
@@ -106,10 +96,10 @@ export default function NivoChart({ data: initialData }) {
                 />
             </div>
 
-            <div className='w-full h-96'>
+            <div className='w-full h-96 mb-8'>
                 <p className='text-sm translate-y-10 ml-4 font-normal'>NGN (₦)</p>
                 <ResponsiveLineCanvas
-                    data={data}
+                    data={nivoData}
                     margin={{ top: 50, right: 20, bottom: 50, left: 50 }}
                     yScale={{
                         type: 'linear',
@@ -148,10 +138,21 @@ export default function NivoChart({ data: initialData }) {
                     useMesh={true}
                     isInteractive={false}
                     gridYValues={yAxis.ticks}
-                    theme={theme}
+                    theme={{
+                        axis: {
+                            ticks: {
+                                text: {
+                                    fill: textColor,
+                                    fontSize: 12,
+                                    fontWeight: 400,
+                                    letterSpacing: '0.01em',
+                                }
+                            }
+                        },
+                    }}
                 />
             </div>
-            <Legends data={data} />
+            <Legends data={nivoData} />
         </>
     )
 }

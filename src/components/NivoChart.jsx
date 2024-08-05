@@ -148,6 +148,13 @@ export default function NivoChart({ data: initialData }) {
                                 }
                             }
                         },
+                        tooltip: {
+                            container: {
+                                color: '#213B54',
+                                fontWeight: 300,
+                                fontSize: 14,
+                            }
+                        }
                     }}
                     xFormat={"time:%H:%M"} // works for the toolltip
                     yFormat=">-.2f" // works for the toolltip

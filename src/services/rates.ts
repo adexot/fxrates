@@ -8,7 +8,6 @@ function catchAndReturnEmptyMap(e){
 }
 
 async function getGreyRates() {
-	const nairaConversions = ['usd-ngn', 'eur-ngn', 'gbp-ngn'];
 	const batchResponse = {};
 
 	const res = await fetchUtil('https://user-gw.grey.engineering/v2/currency').catch(console.error);

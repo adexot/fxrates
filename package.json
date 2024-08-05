@@ -26,8 +26,8 @@
   "dependencies": {
     "@astrojs/react": "^3.0.4",
     "@headlessui/react": "^1.7.17",
-    "@nivo/core": "0.80.0",
-    "@nivo/line": "0.80.0",
+    "@nivo/core": "0.87.0",
+    "@nivo/line": "0.87.0",
     "dayjs": "^1.11.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

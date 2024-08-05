@@ -78,7 +78,6 @@ export default function NivoChart({ data: initialData }) {
     if (!data.length) return 'loading';
 
     const yAxis = generateYAxis(nivoData);
-
     return (
         <>
             <div className='flex items-center justify-between w-full'>
@@ -136,7 +135,7 @@ export default function NivoChart({ data: initialData }) {
                     lineWidth={3}
                     enablePoints={false}
                     useMesh={true}
-                    isInteractive={false}
+                    isInteractive={true}
                     gridYValues={yAxis.ticks}
                     theme={{
                         axis: {
@@ -150,6 +149,8 @@ export default function NivoChart({ data: initialData }) {
                             }
                         },
                     }}
+                    xFormat={"time:%H:%M"} // works for the toolltip
+                    yFormat=">-.2f" // works for the toolltip
                 />
             </div>
             <Legends data={nivoData} />

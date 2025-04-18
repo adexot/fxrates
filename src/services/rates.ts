@@ -2,11 +2,15 @@ import { fetchUtil } from "../utils/helpers";
 
 // const generateSendUrl = path => `https://sendgateway.myflutterwave.com/api/v1/config/countrypairs/${path}`;
 
-function catchAndReturnEmptyMap(e){
+function catchAndReturnEmptyMap(e) {
 	console.error(e)
 	return {};
 }
 
+/**
+ * Fetches currency exchange rates from Grey's currency gateway
+ * @returns {Promise<Object>} An object containing user rates for USD, EUR, and GBP to NGN conversions
+ */
 async function getGreyRates() {
 	const batchResponse = {};
 
@@ -21,13 +25,13 @@ async function getGreyRates() {
 	return batchResponse;
 }
 
-async function getSendRates(){
+async function getSendRates() {
 	const generateSendUrl = path => `https://sendgateway.myflutterwave.com/api/v1/config/countrypairs/${path}`;
 	const getSendEURRate = fetchUtil(generateSendUrl('NL?to=NG')).catch(catchAndReturnEmptyMap);
 	const getSendGBPRate = fetchUtil(generateSendUrl('GB?to=NG')).catch(catchAndReturnEmptyMap);
 	const getSendUSDRate = fetchUtil(generateSendUrl('US?to=NG')).catch(catchAndReturnEmptyMap);
 
-  // @ts-ignore
+	// @ts-ignore
 	const [
 		sendEURRate,
 		sendGBPRate,
@@ -48,7 +52,7 @@ async function getSendRates(){
 	return batchResponse;
 }
 
-async function getTransferGoRates(){
+async function getTransferGoRates() {
 	const generateTransferGoUrl = qs => `https://my.transfergo.com/api/booking/quotes?${qs}&calculationBase=sendAmount` // qs => querystring
 
 	const getTGEURRate = fetchUtil(generateTransferGoUrl('fromCurrencyCode=EUR&toCurrencyCode=NGN&fromCountryCode=NL&toCountryCode=NG&amount=100.00')).catch(catchAndReturnEmptyMap);
@@ -78,7 +82,7 @@ async function getTransferGoRates(){
 
 export async function getAllRates() {
 	const batchResponse = {
-		grey: await getGreyRates(),
+		// grey: await getGreyRates(),
 		send: await getSendRates(),
 		transferGo: await getTransferGoRates()
 	}
@@ -91,12 +95,12 @@ function getNGNValueFromSend(res) {
 }
 
 function getNGNValueFromTG(res) {
-	const value = res.options?.filter(({isDefault}) => isDefault === true )[0].rate.value
+	const value = res.options?.filter(({ isDefault }) => isDefault === true)[0].rate.value
 	return Number(value);
 }
 
 export function getCBNRates(): Promise<Record<string, number>> {
-	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp?_=1699958900612').then(({data}) => {
+	return fetchUtil('https://www.cbn.gov.ng/rates/outputExchangeRateJSN.asp?_=1699958900612').then(({ data }) => {
 		// filter by currency
 		const usd = data.filter(el => el.currency.toLowerCase() === 'us dollar');
 		const gbp = data.filter(el => el.currency.toLowerCase() === 'pounds sterling');

@@ -50,7 +50,7 @@ function getDayAndTime(timestamp) {
  */
 export function generateNivoChartData(data, currency= 'eur') {
   const send = [];
-  const grey = [];
+  // const grey = [];
   const transferGo = [];
 
   data.forEach(entry => {
@@ -61,10 +61,10 @@ export function generateNivoChartData(data, currency= 'eur') {
       x,
       y: obj.send[currency] || 0,
     });
-    grey.push({
-      x,
-      y: obj.grey[currency] || 0,
-    });
+    // grey.push({
+    //   x,
+    //   y: obj.grey[currency] || 0,
+    // });
     transferGo.push({
       x,
       y: obj.transferGo[currency] || 0,
@@ -78,11 +78,11 @@ export function generateNivoChartData(data, currency= 'eur') {
       data: send,
       color: '#219653'
     },
-    {
-      id: 'Grey',
-      data: grey,
-      color: '#F2994A'
-    },
+    // {
+    //   id: 'Grey',
+    //   data: grey,
+    //   color: '#F2994A'
+    // },
     {
       id: 'TransferGo',
       data: transferGo,
